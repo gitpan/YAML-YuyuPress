@@ -1,0 +1,15 @@
+Changes
+MANIFEST
+META.yml # Will be created by "make dist"
+Makefile.PL
+README
+lib/YAML/Yuyu.pm
+lib/YAML/YuyuPress.pm
+lib/tmpl/normal.tmpl
+script/yuyupress
+t/00.load.t
+t/03-pres.t
+t/05live.t
+t/yyp-1.yaml
+t/yyp-2.yaml
+t/yyp-3.yaml

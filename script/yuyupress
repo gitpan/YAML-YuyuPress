@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use lib "../lib";
+
+my $yaml = shift || die 'Andestá el argumento?';
+my $path = shift || '..';
+my $plantilla = shift || 'normal.tmpl';
+
+use YAML::YuyuPress;
+
+my $yuyu = YAML::YuyuPress->new( path => $path, 
+				 plantilla => $plantilla, 
+				 contenido => $yaml );
+$yuyu->port(9000);
+$yuyu->run();

@@ -1,0 +1,34 @@
+---
+- titulo: El camell i el YAML
+  autor: J. J. Merelo
+  email: jj@merelo.net
+  sitio: Barcelona Perl Festival
+---  
+- titulo 
+- primer punto
+- segundo punto
+
+--- 
+- Otro titulo 
+- y mas cosas
+
+---
+- Ahora en serio
+- !perl/$img 
+  src: imagen.jpg
+- Aqui hay una imagen
+
+---
+- Esta es la m&aacute;s guay
+- !perl/$img 
+  src: imagen2.jpg
+- Otra línea
+- !perl/$code
+  body: "my $foo = bar"
+
+---
+- Otra un tanto complicada
+- !perl/$blockquote
+  body: |
+    Estos son los días en los que ocurrieron
+    los hechos que relatamos

@@ -1,0 +1,14 @@
+---  
+- titulo 
+- primer punto
+- segundo punto
+
+--- 
+- Otro titulo 
+- y mas cosas
+
+---
+- Ahora en serio
+- !perl/$img 
+  src: imagen.jpg
+- Aqui hay una imagen

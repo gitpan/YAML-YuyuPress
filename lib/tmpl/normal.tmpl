@@ -1,0 +1,31 @@
+<html>
+<head><title>Presentación: [% titulo %]</title>
+</head>
+<style>
+ul { border: 1; border-style: dashed; border-color:green; margin-right: 25px; margin-left: 25px; display: block;}
+li { font-size: 150%; font-family: helvetica,arial,sans-serif; line-height:1.8; margin:5px}
+h1 {border: 1; border-style: inset; border-color:darkgreen; padding-bottom: 5px; text-shadow: 0.2em 0.2em blue; color: darkblue;
+	padding-top: 5px; padding-left: 30px; padding-right: 30px;width: auto; display: inline;
+	line-height:1.6;}
+A:hover { text-decoration: none; color: red; background-color: yellow; line-height: 120%;}
+body {background-color: rgb(245, 255, 250);}
+.resalta { color : darkred;}
+.chulo { color : green;}
+code { background-color: lightblue;
+	text-size:1.8em;
+        margin: 10px;
+	padding-top: 5px;
+	padding-bottom:5px}
+	
+</style>
+<body>
+<h1>[% titulo %]</h1>
+<br><br>
+<p>
+[% contenido %]
+</p>
+<div align='right' style='border: 1; border-style: dotted; border-color:lightgreen; display: inline; padding: 5px;float: right;'>
+	[% navegacion %]
+
+</body>
+</html>
