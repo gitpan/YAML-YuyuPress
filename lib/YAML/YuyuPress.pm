@@ -30,8 +30,8 @@ use YAML qw(LoadFile); #Para configuración
 use Template;
 use Exporter;
 
-our $VERSION="0.03";
-our ($CVSVERSION) = ( '$Revision: 1.9 $' =~ /(\d+\.\d+)/ ) ;
+our $VERSION="0.04";
+our ($CVSVERSION) = ( '$Revision: 1.10 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/YAML::Yuyu HTTP::Server::Simple/;
 use HTTP::Server::Simple::Static qw(serve_static);

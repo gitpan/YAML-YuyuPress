@@ -1,5 +1,9 @@
 Revision history for YAML-YuyuPress
 
+0.04	A few changes in Makefile.PL, that didn't include
+stuff. Incremental change to yuyugen, which can now generate
+everything in a single page.
+
 0.01    Date/time
         First version, released on an unsuspecting world.
 

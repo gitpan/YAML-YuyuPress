@@ -1,15 +1,16 @@
 # http://module-build.sourceforge.net/META-spec.html
 #XXXXXXX This is a prototype!!!  It will change in the future!!! XXXXX#
 name:         YAML-YuyuPress
-version:      0.03
+version:      0.04
 version_from: lib/YAML/YuyuPress.pm
 installdirs:  site
 requires:
     HTTP::Server::Simple:          0.02
+    HTTP::Server::Simple::Static:  0.01
     Object::props:                 0
     Template:                      2.14
     Test::More:                    0
-    YAML:                          0.35
+    YAML:                          0.36
 
 distribution_type: module
 generated_by: ExtUtils::MakeMaker version 6.17

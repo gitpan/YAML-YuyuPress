@@ -10,9 +10,10 @@ WriteMakefile(
     EXE_FILES           => [ 'bin/yuyupress', 'bin/yuyugen', 'bin/yuyucheck' ],
     PREREQ_PM => {
 		  'Test::More' => 0,
-		  'YAML' => 0.35,
+		  'YAML' => 0.36,
 		  'Template' => 2.14,
 		  'HTTP::Server::Simple' => 0.02,
+		  'HTTP::Server::Simple::Static' => 0.01,
 		  'Object::props' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
