@@ -35,7 +35,7 @@ use YAML qw(LoadFile); #Para configuración
 use Template;
 use Exporter;
 
-our ($VERSION) = ( '$Revision: 1.6 $' =~ /(\d+\.\d+)/ ) ;
+our ($VERSION) = ( '$Revision: 1.9 $' =~ /(\d+\.\d+)/ ) ;
 
 #Declaración de propiedades
 use Object::props qw( path plantilla contenido staticdir );
@@ -62,7 +62,7 @@ sub portada {
 
 <h3>$data{'sitio'}</h3>
 
-<div style='margin:0 auto'><a href='?slide=1'>Comienzo</a></div>
+<div style='margin:0 auto'><a href='?slide=0'>Comienzo</a></div>
 EIF
   my $salida;
   $self->{_template}->process( $self->plantilla, 
@@ -93,7 +93,8 @@ sub slide {
   $self->{_template}->process( $self->plantilla, 
 			       { titulo => $titulo,
 				 contenido => $contenido,
-				 navegacion => $navegacion
+				 navegacion => $navegacion,
+				 number => $nr+1
 			       }, 
 			       \$salida )
     || die $self->{_template}->error(), "\n"; ;

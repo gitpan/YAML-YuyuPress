@@ -5,7 +5,7 @@ use warnings;
 
 =head1 NAME
 
-YAML::YuyuPress - Tool for makine presentacions
+YAML::YuyuPress - Tool for making presentacions out of YAML files.
 
 
 =head1 SYNOPSIS
@@ -30,8 +30,8 @@ use YAML qw(LoadFile); #Para configuración
 use Template;
 use Exporter;
 
-our $VERSION="0.02";
-our ($CVSVERSION) = ( '$Revision: 1.8 $' =~ /(\d+\.\d+)/ ) ;
+our $VERSION="0.03";
+our ($CVSVERSION) = ( '$Revision: 1.9 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/YAML::Yuyu HTTP::Server::Simple/;
 use HTTP::Server::Simple::Static qw(serve_static);

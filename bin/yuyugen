@@ -1,0 +1,41 @@
+#!perl
+
+use lib "../lib";
+
+my ($VERSION) = ( '$Revision: 1.3 $' =~ /(\d+\.\d+)/ ) ;
+
+my $yaml = shift || die "Usage: $0 pres.yaml [Path] [Template] [OutputDir]\n";
+my $path = shift || '.';
+my $plantilla = shift || 'normal.tmpl';
+my $outputdir = shift || "output";
+
+use YAML::Yuyu;
+
+my $yuyu = YAML::Yuyu->new( path => $path, 
+			    plantilla => $plantilla, 
+			    contenido => $yaml );
+
+
+-d $outputdir || mkdir( $outputdir ) || die "Está jodía la cosa del dir $outputdir\n";
+print "Generando portada\n";
+open( F, ">$outputdir/index.html") || die "No puedo abrir $outputdir/index.html";
+my $portada = $yuyu->portada();
+$portada=~ s/\?slide=(\d+)/slide$1.html/g;
+print F $portada;
+close F;
+print "Generando índice\n";
+open( F, ">$outputdir/indice.html")|| die "No puedo abrir $outputdir/indice.html";
+my $indice = $yuyu->indice();
+$indice =~ s/\?slide=(\d+)/slide$1.html/g;
+print F $indice;
+close F;
+print "Generando slides...\n";
+for ( 0..$yuyu->{_size}) {
+  print "$_\n";
+  open( F, ">$outputdir/slide$_.html")|| die "No puedo abrir $outputdir/slide$_.html";
+  my $slide =  $yuyu->slide($_);
+  $slide =~ s/\?slide=(\d+)/slide$1.html/g;
+  $slide =~ s/\?indice=1/index.html/g;
+  print F  $slide;
+  close F;
+}
