@@ -1,0 +1,29 @@
+#!/usr/bin/perl
+
+use lib "../lib";
+
+my ($VERSION) = ( '$Revision: 1.2 $' =~ /(\d+\.\d+)/ ) ;
+
+my $yaml = shift || die 'Usage: $0 pres.yaml [Path] [Template] [OutputDir]';
+my $path = shift || '..';
+my $plantilla = shift || 'normal.tmpl';
+my $outputdir = shift || "output";
+
+use YAML::Yuyu;
+
+my $yuyu = YAML::Yuyu->new( path => $path, 
+			    plantilla => $plantilla, 
+			    contenido => $yaml );
+
+mkdir( $output ) || die "Está jodía la cosa del dir $output\n";
+open( F, ">$output/index.html");
+print F,$yuyu->portada()=~ s/\?slide=$0/slide$0/g;
+close F;
+open( F, ">$output/indice.html");
+print F,$yuyu->indice();
+close F;
+for ( 0..$yuyu->{_size}) {
+  open( F, ">$output/slide$_.html");
+  print F, $yuyu->slide($_) =~ s/\?slide=$_/slide$_/g;
+  close F;
+}

@@ -1,0 +1,15 @@
+#!/usr/bin/perl
+
+use YAML qw(LoadFile);
+
+my $yaml = shift || die 'Andestá el argumento?';
+
+-e $yaml || die "Fale, pero ese fichero no existe";
+
+my (@check) = LoadFile( $yaml );
+
+if (@check) {
+  use Data::Dumper;
+  print Dumper(@check);
+
+}

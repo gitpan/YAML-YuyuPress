@@ -10,8 +10,11 @@ use warnings;
 
 =head1 SYNOPSIS
 
-    my $yuyu = new YAML::Yuyu( { plantilla => 'plantilla.tmpl',
-                                     contenido => 'contenido.yaml' } );
+    my $yuyu = new YAML::Yuyu( { path => $path, 
+                                 plantilla => 'plantilla.tmpl',
+                                 contenido => 'contenido.yaml',
+                                 staticdir => `pwd`
+                                  } );
 
 =head1 DESCRIPTION
 
@@ -32,10 +35,10 @@ use YAML qw(LoadFile); #Para configuración
 use Template;
 use Exporter;
 
-our ($VERSION) = ( '$Revision: 1.3 $' =~ /(\d+\.\d+)/ ) ;
+our ($VERSION) = ( '$Revision: 1.6 $' =~ /(\d+\.\d+)/ ) ;
 
 #Declaración de propiedades
-use Object::props qw( path plantilla contenido );
+use Object::props qw( path plantilla contenido staticdir );
 
 use Class::constr { 
   init => sub { 
@@ -64,8 +67,7 @@ EIF
   my $salida;
   $self->{_template}->process( $self->plantilla, 
 			       { titulo => $data{'titulo'},
-				 contenido => $contenido				
-			       }, 
+				 contenido => $contenido }, 
 			       \$salida )
     || die $self->{_template}->error(), "\n"; ;
   return $salida;
@@ -136,6 +138,20 @@ sub procesaArray {
   return $contenido;
 }
 
+sub procesaHash {
+  my $yref = shift;
+  my $contenido='<LI><dl>';
+  for ( keys %$yref ) {
+    $contenido .= "<dt>$_</dt><dd>\n";
+    for my $i ( @{$yref->{$_}} ) {
+      $contenido .= procesaItem( $i );
+    }
+    $contenido .="\n</dd>";
+  }
+  $contenido .= "</dl></li>";
+  return $contenido;
+}
+
 sub procesaItem {
   my $yref = shift;
   my $contenido='';
@@ -145,6 +161,8 @@ sub procesaItem {
     my $tag = ref $yref;
     if ( $tag eq 'ARRAY' ) {
       $contenido = procesaArray( $yref );
+    } elsif ( $tag eq 'HASH' ) {
+      $contenido = procesaHash( $yref );
     } else {
       $contenido = "<$tag";
       for ( keys %$yref ) {
@@ -152,7 +170,11 @@ sub procesaItem {
 	  $contenido .= " $_='$yref->{$_}'";
 	}
       }
-      $contenido.=">".$yref->{'body'}."</$tag>"
+      if ( $yref->{'body'} ) {
+	$contenido.=">".$yref->{'body'}."</$tag>";
+      } else {
+	$contenido.=">";
+      }
     }
   }
   return $contenido;

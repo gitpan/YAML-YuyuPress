@@ -1,3 +1,4 @@
+
 ---
 - titulo: El camell i el YAML
   autor: J. J. Merelo
@@ -16,12 +17,14 @@
 - Ahora en serio
 - !perl/$img 
   src: imagen.jpg
+  align: right
 - Aqui hay una imagen
 
 ---
 - Esta es la m&aacute;s guay
 - !perl/$img 
   src: imagen2.jpg
+  align: right
 - Otra línea
 - !perl/$code
   body: "my $foo = bar"
@@ -32,3 +35,13 @@
   body: |
     Estos son los días en los que ocurrieron
     los hechos que relatamos
+
+---
+- Tanto follón pa eso?
+- Pero además :
+              - Legible.
+              - Editable.
+              - Multilingüe.
+              - A salvo de mancillas (<em>taint-safe</em>).
+              - Puede serializar todas las estructuras normales.
+              - Extensible a partir de un sistema de tipos.

@@ -12,7 +12,8 @@ WriteMakefile(
 		  'Test::More' => 0,
 		  'YAML' => 0.35,
 		  'Template' => 2.14,
-		  'HTTP::Server::Simple' => 0.02 
+		  'HTTP::Server::Simple' => 0.02,
+		  'Object::props' => 1.77
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
     clean               => { FILES => 'YAML-YuyuPress-*' },

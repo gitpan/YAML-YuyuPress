@@ -7,9 +7,12 @@ my $path = shift || '..';
 my $plantilla = shift || 'normal.tmpl';
 
 use YAML::YuyuPress;
+my $pwd = `pwd`;
+chomp( $pwd );
 
 my $yuyu = YAML::YuyuPress->new( path => $path, 
 				 plantilla => $plantilla, 
-				 contenido => $yaml );
+				 contenido => $yaml,
+				 staticdir => $pwd );
 $yuyu->port(9000);
 $yuyu->run();

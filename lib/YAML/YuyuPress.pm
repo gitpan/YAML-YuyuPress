@@ -30,10 +30,11 @@ use YAML qw(LoadFile); #Para configuración
 use Template;
 use Exporter;
 
-our $VERSION="0.01";
-our ($CVSVERSION) = ( '$Revision: 1.2 $' =~ /(\d+\.\d+)/ ) ;
+our $VERSION="0.02";
+our ($CVSVERSION) = ( '$Revision: 1.8 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/YAML::Yuyu HTTP::Server::Simple/;
+use HTTP::Server::Simple::Static qw(serve_static);
 
 =head2 handle_request CGI
 
@@ -46,8 +47,17 @@ This routine is called whenever your server gets a request it can handle. It's c
 sub handle_request {
   my ( $self, $cgi ) = @_;
   if ( scalar  @{$cgi->{'.parameters'}} == 0 ) {
-#    print "Defecto";
-    print $self->portada;
+    if ( $cgi->path_info eq '/' ) {
+      #    print "Defecto";
+      #    print "<html><body>CGI ", join("-", %$cgi), "<br> SELF ", join("-", %$self), 
+      #      "<br>ENV ", join( "*", %ENV),
+      #      "\n path_info", $cgi->path_info,
+      #      " Parameters" , join( "-", @{$cgi->{'.parameters'}}),
+      #      "parameters ", scalar  @{$cgi->{'.parameters'}},'</html></body>';
+      print $self->portada;
+    } else {
+      serve_static( $self, $cgi, $self->staticdir);
+    }
   } elsif ( $cgi->{indice} ) {
 #    print "Indice",
     print $self->indice;

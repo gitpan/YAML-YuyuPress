@@ -7,6 +7,8 @@ lib/YAML/Yuyu.pm
 lib/YAML/YuyuPress.pm
 lib/tmpl/normal.tmpl
 script/yuyupress
+script/yuyugen
+script/yuyucheck
 t/00.load.t
 t/03-pres.t
 t/05live.t
