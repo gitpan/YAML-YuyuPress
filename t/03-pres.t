@@ -5,11 +5,16 @@ use lib qw( ../lib lib);
 use Test::More 'no_plan';
 use YAML::Yuyu;
 
-print "Probando en serio\n";
+print "This is not a drill\n";
 
 my $path = 'lib/tmpl';
 my $plantilla = 'normal.tmpl';
-my $contenido = 't/yyp-3.yaml';
+my $contenido;
+if ( -e 't/yyp-3.yaml' ) {
+  $contenido = 't/yyp-3.yaml';
+} else {
+  $contenido = 'yyp-3.yaml'; # Just in case we're testing in-dir
+}
 
 my $yuyu = YAML::Yuyu->new( path => $path, 
 			    plantilla => $plantilla, 

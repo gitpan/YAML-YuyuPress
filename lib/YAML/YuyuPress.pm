@@ -1,4 +1,4 @@
-package YAML::Yuyu;
+package YAML::YuyuPress;
 
 use strict;
 use warnings;
@@ -10,66 +10,61 @@ YAML::YuyuPress - Tool for making presentacions out of YAML files.
 
 =head1 SYNOPSIS
 
-    my $yuyu = new YAML::YuyuPress( { plantilla => 'plantilla.tmpl',
-                                          contenido => 'contenido.yaml' } );
+    my $yuyu = new YAML::YuyuPress( { path => $path, 
+                                      plantilla => 'plantilla.tmpl', 
+                                      contenido => 'contenido.yaml' } );
 
 =head1 DESCRIPTION
 
     Program for making presentations out of YAML files. Can be used as a module
     or from the C<yuyupress> script
 
-Hereda de la clase Yuyu y de la HTTP::Server::Simple para servir páginas
+    Inherits from C<YAML::Yuyu> and C<HTTP::Server::Simple::CGI> for serving pages
 
 =head1 METHODS
 
 =cut
 
-package YAML::YuyuPress;
+use HTTP::Server::Simple::CGI;
 
-use YAML qw(LoadFile); #Para configuración
-use Template;
-use Exporter;
+our $VERSION="0.05";
+our ($CVSVERSION) = ( '$Revision: 1.12 $' =~ /(\d+\.\d+)/ ) ;
 
-our $VERSION="0.04";
-our ($CVSVERSION) = ( '$Revision: 1.10 $' =~ /(\d+\.\d+)/ ) ;
-
-use base qw/YAML::Yuyu HTTP::Server::Simple/;
-use HTTP::Server::Simple::Static qw(serve_static);
+use base qw/YAML::Yuyu HTTP::Server::Simple::CGI/;
+#use HTTP::Server::Simple::CGI;
+#our @ISA = qw(HTTP::Server::Simple::CGI);
 
 =head2 handle_request CGI
 
-This routine is called whenever your server gets a request it can handle. It's called with a CGI object that's been pre-initialized.  You want to override this method in your subclass
-
+    Overrides default to return the main page ('portada'), index or any of the slides.
 
 =cut
 
 
 sub handle_request {
   my ( $self, $cgi ) = @_;
-  if ( scalar  @{$cgi->{'.parameters'}} == 0 ) {
-    if ( $cgi->path_info eq '/' ) {
-      #    print "Defecto";
-      #    print "<html><body>CGI ", join("-", %$cgi), "<br> SELF ", join("-", %$self), 
-      #      "<br>ENV ", join( "*", %ENV),
-      #      "\n path_info", $cgi->path_info,
-      #      " Parameters" , join( "-", @{$cgi->{'.parameters'}}),
-      #      "parameters ", scalar  @{$cgi->{'.parameters'}},'</html></body>';
+  my $path = $cgi->path_info();
+  print "HTTP/1.0 200 OK\r\n",
+    $cgi->header();
+  if ( $path eq '/' ) {
+    if ( !$cgi->param() ) {
       print $self->portada;
-    } else {
-      serve_static( $self, $cgi, $self->staticdir);
+      return 1;
     }
-  } elsif ( $cgi->{indice} ) {
-#    print "Indice",
-    print $self->indice;
-  } elsif ( defined $cgi->{slide}->[0] ) {
-#    print "Slide";
-    print $self->slide( $cgi->{slide}->[0] );
+    if ( $cgi->param('indice') ){
+      print $self->indice;
+      return 1;
+    }
+    if ( $cgi->param('slide') ne '' ) {
+      print $self->slide( $cgi->param('slide') );
+      return 1;
+    }
   } else {
-    print "No me entero", join( "-", @{$cgi->{'.parameters'}}),
-      "parameters ", scalar  @{$cgi->{'.parameters'}};
+    print "HTTP/1.0 404 Not found\r\n";
+    print $cgi->start_html('Not found'),
+      $cgi->h1('Not found'),
+	$cgi->end_html;
   }
 }
-
-
-
+     
 'Tostodo';
