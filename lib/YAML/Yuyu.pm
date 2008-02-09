@@ -6,24 +6,31 @@ use warnings;
 
 =head1 NAME
 
-    YAML::Yuyu - Clase para hacer presentaciones fácilmente a partir de un fichero YAML
+    YAML::Yuyu - Easily create presentations from a YAML file.
 
 =head1 SYNOPSIS
 
     my $yuyu = new YAML::Yuyu( { path => $path, 
                                  plantilla => 'plantilla.tmpl',
-                                 contenido => 'contenido.yaml',
-                                 staticdir => `pwd`
+                                 contenido => 'contenido.yaml'
                                   } );
 
 =head1 DESCRIPTION
 
-Clase base que contiene la conexión a la base de datos y otros objetos
-tales como el generador de claves. 
+Derived from L<Object::props>, which is a way cool module, this module
+loads a YAML from which it derives a presentation: index, slides, and
+so on. It can be used from another module, but you'll usually want to
+do it from the scripts for standalone presentations (with its own web
+server, no less) or to generate a single or several HTML pages you'll
+want to present from somewhere else or upload to a website.
 
 =head1 USAGE
 
-  bash$ yuyupress presentation.yaml [path-to-templates] [template(s)]
+Stand-alone presentation tool. It will use default templates, if none
+is indicated 
+    bash$ yuyupress presentation.yaml [path-to-templates] [template(s)] 
+Generate a web page with the presentation
+    bash$ yuyugen presentation.yaml [path-to-templates] [template(s)]
 
 =head1 METHODS
 
@@ -31,14 +38,14 @@ tales como el generador de claves.
 
 package YAML::Yuyu;
 
-use YAML qw(LoadFile); #Para configuración
+use YAML qw(LoadFile); # Para configuración
 use Template;
 use Exporter;
 
-our ($VERSION) = ( '$Revision: 1.9 $' =~ /(\d+\.\d+)/ ) ;
+our ($VERSION) = ( '$Revision: 1.10 $' =~ /(\d+\.\d+)/ ) ;
 
 #Declaración de propiedades
-use Object::props qw( path plantilla contenido staticdir );
+use Object::props qw( path plantilla contenido );
 
 use Class::constr { 
   init => sub { 
@@ -51,6 +58,12 @@ use Class::constr {
     $_[0]->{_size } = scalar @stream - 1;
   }
 };
+
+=head2 portada
+
+C<portada> is the main page; it returns the title and general front matter for the presentation
+
+=cut
 
 sub portada {
   my $self = shift;
@@ -72,6 +85,13 @@ EIF
     || die $self->{_template}->error(), "\n"; ;
   return $salida;
 }
+
+
+=head2 slide
+
+C<slide>( $slide_number) returns the $slide_number'th slide from the presentation
+
+=cut
 
 sub slide {
   my $self = shift;
@@ -100,6 +120,12 @@ sub slide {
     || die $self->{_template}->error(), "\n"; ;
   return $salida;
 };
+
+=head2 indice
+
+Returns the presentation index
+
+=cut
 
 sub indice {
   my $self = shift;

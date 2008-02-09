@@ -14,6 +14,10 @@ YAML::YuyuPress - Tool for making presentacions out of YAML files.
                                       plantilla => 'plantilla.tmpl', 
                                       contenido => 'contenido.yaml' } );
 
+    $yuyu->port(13432); # Set the server port
+    my $pid=$yuyu->background(); # or
+    $yuyu->run(); # Both inherited from HTML::Server::Simple::CGI
+
 =head1 DESCRIPTION
 
     Program for making presentations out of YAML files. Can be used as a module
@@ -27,8 +31,8 @@ YAML::YuyuPress - Tool for making presentacions out of YAML files.
 
 use HTTP::Server::Simple::CGI;
 
-our $VERSION="0.05";
-our ($CVSVERSION) = ( '$Revision: 1.12 $' =~ /(\d+\.\d+)/ ) ;
+our $VERSION="0.05_1";
+our ($CVSVERSION) = ( '$Revision: 1.13 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/YAML::Yuyu HTTP::Server::Simple::CGI/;
 #use HTTP::Server::Simple::CGI;
