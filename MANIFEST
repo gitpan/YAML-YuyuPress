@@ -9,6 +9,8 @@ lib/tmpl/normal.tmpl
 bin/yuyupress
 bin/yuyugen
 bin/yuyucheck
+bin/yuyuhowto
+bin/howto.yaml
 t/00.load.t
 t/03-pres.t
 t/05live.t

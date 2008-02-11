@@ -3,6 +3,7 @@ package YAML::Yuyu;
 use strict;
 use warnings;
 
+use Carp;
 
 =head1 NAME
 
@@ -10,10 +11,27 @@ use warnings;
 
 =head1 SYNOPSIS
 
-    my $yuyu = new YAML::Yuyu( { path => $path, 
+    my $yuyu = new YAML::Yuyu( path => $path, 
                                  plantilla => 'plantilla.tmpl',
-                                 contenido => 'contenido.yaml'
-                                  } );
+                                 contenido => 'contenido.yaml' ); 
+
+    # From an array of pre-loaded or programatically created slides 
+    use YAML qw(LoadFile);
+    @slides = LoadFile('yourslides.yaml');
+    my $yuyu = new YAML::Yuyu( path => $path, 
+                               plantilla => 'plantilla.tmpl',
+                               contenido => \@slides  ); 
+    
+    # From a glob; v. gr. data behind the __END__ marker
+    my $yuyu3 = YAML::Yuyu->new( path => $path, 
+			         plantilla => $plantilla, 
+			         contenido => \*main::DATA );
+
+    my $nth_slide = $yuyu->slide( $n ); 
+    my $front_page = $yuyu->portada();
+    my $index = $yuyu->index();
+
+=cut
 
 =head1 DESCRIPTION
 
@@ -28,21 +46,22 @@ want to present from somewhere else or upload to a website.
 
 Stand-alone presentation tool. It will use default templates, if none
 is indicated 
+
     bash$ yuyupress presentation.yaml [path-to-templates] [template(s)] 
+
 Generate a web page with the presentation
+
     bash$ yuyugen presentation.yaml [path-to-templates] [template(s)]
 
 =head1 METHODS
 
 =cut
 
-package YAML::Yuyu;
-
-use YAML qw(LoadFile); # Para configuración
+use YAML qw(LoadFile Load); # Para configuración
 use Template;
 use Exporter;
 
-our ($VERSION) = ( '$Revision: 1.10 $' =~ /(\d+\.\d+)/ ) ;
+our ($VERSION) = ( '$Revision: 1.14 $' =~ /(\d+\.\d+)/ ) ;
 
 #Declaración de propiedades
 use Object::props qw( path plantilla contenido );
@@ -51,7 +70,17 @@ use Class::constr {
   init => sub { 
     my $template = Template->new( {INCLUDE_PATH => $_[0]->path } );
     $_[0]->{_template} = $template;
-    my @stream =  LoadFile( $_[0]->contenido );
+    my @stream;
+    if ( ref $_[0]->contenido eq '' ) {
+      @stream =  LoadFile( $_[0]->contenido );
+    } elsif ( ref $_[0]->contenido eq 'ARRAY' ) {
+      @stream = @{$_[0]->contenido};
+    } elsif ( ref $_[0]->contenido eq 'GLOB' ) {
+      my $glob = $_[0]->contenido;
+      my $stream = join('',<$glob>);
+      @stream = Load($stream);
+    }
+    carp "Bad content stream" if !@stream;
     $_[0]->{_portada} = shift @stream;
     $_[0]->{_slides} = \@stream;
     $_[0]->{_doc} = $_[0]->plantilla;
@@ -206,5 +235,18 @@ sub procesaItem {
   }
   return $contenido;
 }
+
+=head1 Copyright
+
+  This file is released under the GPL. See the LICENSE file included in this distribution,
+  or go to http://www.fsf.org/licenses/gpl.txt
+
+  CVS Info: $Date: 2008/02/11 09:33:19 $
+  $Header: /home/jmerelo/repos/yuyupress/lib/YAML/Yuyu.pm,v 1.14 2008/02/11 09:33:19 jmerelo Exp $
+  $Author: jmerelo $
+  $Revision: 1.14 $
+
+=cut
+
 
 'Sacabó';

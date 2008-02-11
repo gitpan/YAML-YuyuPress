@@ -1,0 +1,119 @@
+#!/usr/bin/perl
+
+use strict;
+use warnings;
+
+use lib "../lib";
+
+use YAML::YuyuPress;
+
+my $plantilla=<<EOC;
+<html>
+<head><title>Presentación: [% titulo %]</title>
+</head>
+<style>
+ul { border: 1; border-style: dashed; border-color:green; margin-right: 25px; margin-left: 25px; display: block;}
+li { font-size: 150%; font-family: helvetica,arial,sans-serif; line-height:1.8; margin:5px}
+h1 {border: 1; border-style: inset; border-color:darkgreen; padding-bottom: 5px; text-shadow: 0.2em 0.2em blue; color: darkblue;
+	padding-top: 5px; padding-left: 30px; padding-right: 30px;width: auto; display: inline;
+	line-height:1.6;}
+A:hover { text-decoration: none; color: red; background-color: yellow; line-height: 120%;}
+body {background-color: rgb(245, 255, 250);}
+.resalta { color : darkred;}
+.chulo { color : green;}
+code { background-color: lightblue;
+	text-size:1.8em;
+        margin: 10px;
+	padding-top: 5px;
+	padding-bottom:5px}
+	
+</style>
+<body>
+<h1>[% titulo %]</h1>
+<br><br>
+<p>
+[% contenido %]
+</p>
+<div align='right' style='border: 1; border-style: dotted; border-color:lightgreen; display: inline; padding: 5px;float: right;'>
+	[% navegacion %]
+
+</body>
+</html>
+EOC
+
+my $yuyu = YAML::YuyuPress->new( { path => '', 
+				   plantilla => \$plantilla, 
+				   contenido => \*main::DATA,
+				   staticdir => '' } );
+
+print "Presenting YAML::YuyuPress mino-Howto\nPoint your browser at http://127.0.0.1:8080/\n";
+$yuyu->run();
+
+__END__
+---
+- titulo: YuyuPress HowTo
+  autor: J. J. Merelo
+  email: jj@merelo.net
+  sitio: Granada PM
+---
+- Install YAML::YuyuPress
+- Wait, you've already done that
+---
+- Create a YAML file
+- Check it out at <a href='http://yaml.org'>Yaml.org</a>
+- Or learn it <a href='http://yaml.kwiki.org/index.cgi?YamlInFiveMinutes'> in five minutes
+---
+- First slide contains a hash with meta info
+- Just like so: 
+- >
+  <pre>- titulo: YAML for vermins
+    autor: S. P. Eaker
+    email: spe@vermin.edu
+    sitio: Wolf's den</pre>
+---
+- The rest bullets
+- |
+  <pre>- This is a title
+  - First bullet point
+  - Second bullet point
+  - You got it, third</pre>
+---
+- This is a title
+- First bullet point
+- Second bullet point
+- You got it, third
+---
+- You can insert arbitrary HTML
+- |
+  <pre>- !perl/$img 
+    src: yaml.png
+    align: right
+  - Another line
+  - !perl/$code
+    body: "my $foo = bar"</pre>
+---
+- Which will look like you expected
+- !perl/$img 
+  src: yaml.png
+  align: right
+- Another line
+- !perl/$code
+  body: "my $foo = bar"
+---
+- Then run the script
+- |
+  <code>yuyupress <presentation> [template dir] [template file]</code>
+- By default, there will be a template at $INSTALLDIR/lib/tmpl
+- There's also a default template called <code>normal.tmpl</code>
+---
+- Templating engine is the Template Toolkit
+- You can create new templates easily
+---
+- Use <code>yuyugen</code> to generate HTML
+- For the presentation in a single file
+- |
+  <code>bash$ yuyugen howto.yaml ../lib/tmpl/ normal.tmpl . 1</code>
+- For a file per slide
+- |
+  <code>bash$ yuyugen howto.yaml ../lib/tmpl/ normal.tmpl .</code>
+- Both in the current directory, and with a file called index.html as index

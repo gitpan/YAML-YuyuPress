@@ -1,8 +1,8 @@
-#!perl
+#!/usr/bin/perl
 
 use lib "../lib";
 
-my ($VERSION) = ( '$Revision: 1.4 $' =~ /(\d+\.\d+)/ ) ;
+my ($VERSION) = ( '$Revision: 1.6 $' =~ /(\d+\.\d+)/ ) ;
 
 my $yaml = shift || die "Usage: $0 pres.yaml [Path] [Template] [OutputDir] [1Page]\n";
 my $path = shift || '.';
@@ -40,7 +40,7 @@ if ( ! $modo ) {
     $slide =~ s/\?indice=1/index.html/g;
     print F  $slide;
     close F;
-}
+  }
 } else {
   print "Generando portada\n";
   my $contenido = '';

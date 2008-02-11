@@ -1,4 +1,7 @@
-#!perl
+#!/usr/bin/perl
+
+use strict;
+use warnings;
 
 use lib "../lib";
 
@@ -10,9 +13,9 @@ use YAML::YuyuPress;
 my $pwd = `pwd`;
 chomp( $pwd );
 
-my $yuyu = YAML::YuyuPress->new( path => $path, 
-				 plantilla => $plantilla, 
-				 contenido => $yaml,
-				 staticdir => $pwd );
+my $yuyu = YAML::YuyuPress->new( { path => $path, 
+				   plantilla => $plantilla, 
+				   contenido => $yaml,
+				   staticdir => $path } );
 $yuyu->port(9000);
 $yuyu->run();

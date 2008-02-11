@@ -1,0 +1,67 @@
+---
+- titulo: YuyuPress HowTo
+  autor: J. J. Merelo
+  email: jj@merelo.net
+  sitio: Granada PM
+---
+- Install YAML::YuyuPress
+- Wait, you've already done that
+---
+- Create a YAML file
+- Check it out at <a href='http://yaml.org'>Yaml.org</a>
+- Or learn it <a href='http://yaml.kwiki.org/index.cgi?YamlInFiveMinutes'> in five minutes
+---
+- First slide contains a hash with meta info
+- Just like so: 
+- >
+  <pre>- titulo: YAML for vermins
+    autor: S. P. Eaker
+    email: spe@vermin.edu
+    sitio: Wolf's den</pre>
+---
+- The rest bullets
+- |
+  <pre>- This is a title
+  - First bullet point
+  - Second bullet point
+  - You got it, third</pre>
+---
+- This is a title
+- First bullet point
+- Second bullet point
+- You got it, third
+---
+- You can insert arbitrary HTML
+- |
+  <pre>- !perl/$img 
+    src: yaml.png
+    align: right
+  - Another line
+  - !perl/$code
+    body: "my $foo = bar"</pre>
+---
+- Which will look like you expected
+- !perl/$img 
+  src: yaml.png
+  align: right
+- Another line
+- !perl/$code
+  body: "my $foo = bar"
+---
+- Then run the script
+- |
+  <code>yuyupress <presentation> [template dir] [template file]</code>
+- By default, there will be a template at $INSTALLDIR/lib/tmpl
+- There's also a default template called <code>normal.tmpl</code>
+---
+- Templating engine is the Template Toolkit
+- You can create new templates easily
+---
+- Use <code>yuyugen</code> to generate HTML
+- For the presentation in a single file
+- |
+  <code>bash$ yuyugen howto.yaml ../lib/tmpl/ normal.tmpl . 1</code>
+- For a file per slide
+- |
+  <code>bash$ yuyugen howto.yaml ../lib/tmpl/ normal.tmpl .</code>
+- Both in the current directory, and with a file called index.html as index
