@@ -8,11 +8,9 @@ use YAML qw(LoadFile);
 
 print "This is not a drill\n";
 
-my $path;
+my $path= 'lib/tmpl';;
 my $plantilla = 'normal.tmpl';
-if ( -e "$path/$plantilla" ) {
-  $path = 'lib/tmpl';
-} else {
+if ( ! -e "$path/$plantilla" ) {
   $path = '../lib/tmpl'; # Just in case we're testing in-dir
 }
 

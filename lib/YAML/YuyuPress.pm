@@ -41,8 +41,8 @@ Inherits from L<YAML::Yuyu> and L<HTTP::Server::Simple::CGI> for serving pages. 
 
 =cut
 
-our $VERSION="0.07";
-our ($CVSVERSION) = ( '$Revision: 1.21 $' =~ /(\d+\.\d+)/ ) ;
+our $VERSION="0.07_1";
+our ($CVSVERSION) = ( '$Revision: 1.23 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/HTTP::Server::Simple::CGI/;
 use HTTP::Server::Simple::Static;
@@ -126,10 +126,10 @@ sub process_REST( ) {
   This file is released under the GPL. See the LICENSE file included in this distribution,
   or go to http://www.fsf.org/licenses/gpl.txt
 
-  CVS Info: $Date: 2008/02/11 09:41:08 $
-  $Header: /home/jmerelo/repos/yuyupress/lib/YAML/YuyuPress.pm,v 1.21 2008/02/11 09:41:08 jmerelo Exp $
+  CVS Info: $Date: 2008/02/11 13:04:30 $
+  $Header: /home/jmerelo/repos/yuyupress/lib/YAML/YuyuPress.pm,v 1.23 2008/02/11 13:04:30 jmerelo Exp $
   $Author: jmerelo $
-  $Revision: 1.21 $
+  $Revision: 1.23 $
 
 =cut
 

@@ -61,7 +61,7 @@ use YAML qw(LoadFile Load); # Para configuración
 use Template;
 use Exporter;
 
-our ($VERSION) = ( '$Revision: 1.14 $' =~ /(\d+\.\d+)/ ) ;
+our ($CVSVERSION) = ( '$Revision: 1.15 $' =~ /(\d+\.\d+)/ ) ;
 
 #Declaración de propiedades
 use Object::props qw( path plantilla contenido );
@@ -241,10 +241,10 @@ sub procesaItem {
   This file is released under the GPL. See the LICENSE file included in this distribution,
   or go to http://www.fsf.org/licenses/gpl.txt
 
-  CVS Info: $Date: 2008/02/11 09:33:19 $
-  $Header: /home/jmerelo/repos/yuyupress/lib/YAML/Yuyu.pm,v 1.14 2008/02/11 09:33:19 jmerelo Exp $
+  CVS Info: $Date: 2008/02/11 13:03:55 $
+  $Header: /home/jmerelo/repos/yuyupress/lib/YAML/Yuyu.pm,v 1.15 2008/02/11 13:03:55 jmerelo Exp $
   $Author: jmerelo $
-  $Revision: 1.14 $
+  $Revision: 1.15 $
 
 =cut
 
