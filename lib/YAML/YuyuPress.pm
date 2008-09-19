@@ -41,11 +41,11 @@ Inherits from L<YAML::Yuyu> and L<HTTP::Server::Simple::CGI> for serving pages. 
 
 =cut
 
-our $VERSION="0.07_1";
+our $VERSION="0.07_2";
 our ($CVSVERSION) = ( '$Revision: 1.23 $' =~ /(\d+\.\d+)/ ) ;
 
 use base qw/HTTP::Server::Simple::CGI/;
-use HTTP::Server::Simple::Static;
+use HTTP::Server::Simple::Static; # for serve_static
 use YAML::Yuyu;
 
 =head2 new

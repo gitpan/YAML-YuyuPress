@@ -13,6 +13,7 @@ WriteMakefile(
 		  'YAML' => 0.36,
 		  'Template' => 2.14,
 		  'HTTP::Server::Simple::CGI' => 0.02,
+                  'HTTP::Server::Simple::Static' => 0.01,
 		  'Object::props' => 0
     },
     dist                => { COMPRESS => 'gzip -9f', SUFFIX => 'gz', },
